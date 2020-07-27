@@ -3,13 +3,15 @@
           color, random, rect, ellipse, stroke, image, loadImage, keyCode,
           collideCircleCircle, text, textSize, mouseX, mouseY, strokeWeight, line, 
           mouseIsPressed, windowWidth, windowHeight, noStroke, UP_ARROW, triangle 
-          createVector round*/
+          createVector round frameCount pow log*/
 
 class Plant {
   constructor() {
     this.growthRate = 0.1;
     this.popRate;
-    this.decayRate = 0.09;
+    // decayRate = -ln(current/initial) / time 
+    // decayRate/dt = - ln(current/initial)/ (time**2)
+    this.decayRate = log(grasses.length/50) / ((frameCount/50)**2);
     this.x = random(width);
     this.y = random(height);
     this.pos = createVector(this.x, this.y);
@@ -44,13 +46,13 @@ class Plant {
   // TODO: after a certain time make plants shrink & disappear (or by a decay rate)
   decay() {
     if (!this.growth) {
-      //inital*e^(this.decay*t)
-      if (this.r > 0) {
+      if (this.r > 0) {    
         this.r -= this.decayRate;
         console.log(this.r);
       }
     }
   }
+
 
   
   // TODO: draw the dot/plant using an ellipse
