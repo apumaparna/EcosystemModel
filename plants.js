@@ -9,9 +9,7 @@ class Plant {
   constructor() {
     this.growthRate = 0.1;
     this.popRate;
-    // decayRate = -ln(current/initial) / time 
-    // decayRate/dt = - ln(current/initial)/ (time**2)
-    this.decayRate = log(grasses.length/50) / ((frameCount/50)**2);
+    this.decayRate;
     this.x = random(width);
     this.y = random(height);
     this.pos = createVector(this.x, this.y);
@@ -24,7 +22,7 @@ class Plant {
   //TODO: have the dots grow in size
   grow() {
     if (this.growth) {
-      if (this.r < round(random(15,20))){
+      if (this.r < round(random(15, 20))) {
         this.r += this.growthRate;
       } else {
         this.growth = false;
@@ -34,27 +32,28 @@ class Plant {
 
   //TODO: create more plants by population rate
   multiply() {
-    let num = random(0,1)
+    let num = random(0, 1);
     //num = random(0, 1);
     if (num < 0.01) {
-      return true; 
+      return true;
     } else {
-      return false; 
+      return false;
     }
   }
 
   // TODO: after a certain time make plants shrink & disappear (or by a decay rate)
   decay() {
     if (!this.growth) {
-      if (this.r > 0) {    
+      if (this.r > 0) {
+        // decayRate = -ln(current/initial) / time
+        // decayRate/dt = - ln(current/initial)/ (time**2)
+        this.decayRate = log(grasses.length / 50) / (frameCount / 50) ** 2;
         this.r -= this.decayRate;
         console.log(this.r);
       }
     }
   }
 
-
-  
   // TODO: draw the dot/plant using an ellipse
   draw() {
     noStroke;
