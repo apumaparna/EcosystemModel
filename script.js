@@ -32,6 +32,11 @@ function draw(){
     grasses[i].grow(); 
     grasses[i].decay();
     grasses[i].draw();
+    
+    if(grasses[i].r < 0){
+      grasses.splice(i, 1); 
+      //grasses[i].multiply();
+    }
   }
   
 }
