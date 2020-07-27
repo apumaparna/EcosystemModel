@@ -41,6 +41,7 @@ function draw() {
       grasses.splice(i, 1);
     }
   }
+  
   fill(100);
   text(`Time: ${round(frameCount / 50)}`, 10, 20);
 }
