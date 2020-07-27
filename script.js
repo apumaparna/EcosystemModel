@@ -44,4 +44,5 @@ function draw() {
   
   fill(100);
   text(`Time: ${round(frameCount / 50)}`, 10, 20);
+  text(grasses.length, 10, 40);
 }
