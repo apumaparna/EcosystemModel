@@ -33,6 +33,8 @@ class Plant {
   //TODO: create more plants by population rate
   multiply() {}
 
+ 
+  
   // TODO: after a certain time make plants shrink & disappear (or by a decay rate)
   decay() {
     if (!this.growth) {
@@ -44,6 +46,7 @@ class Plant {
     }
   }
 
+  
   // TODO: draw the dot/plant using an ellipse
   draw() {
     noStroke;
