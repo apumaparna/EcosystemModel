@@ -5,33 +5,46 @@
           mouseIsPressed, windowWidth, windowHeight, noStroke, UP_ARROW, triangle 
           createVector round frameCount pow log*/
 
-class Herbivore{
+class Herbivore {
   constructor() {
-    this.growthRate = 0.1;
     this.popRate;
-    this.decayRate;
+    // this.decayRate;
     this.x = random(width);
     this.y = random(height);
-    this.pos = createVector(this.x, this.y);
-    this.r = 1;
-    this.col = random(90, 120);
-    this.darkness = random(50, 80);
+    this.xVel = random(-0.1, 0.1);
+    this.yVel = random(-0.1, 0.1);
+    // this.pos = createVector(this.x, this.y);
+    // this.vel = createVector(this.xVel, this.yVel);
+    this.r = 30;
+    this.col = 270;
+    this.darkness = 80;
     this.growth = true;
+    this.age = 0;
+    this.finalAge = random(5, 15);
+    this.birthTime = frameCount / 50;
+    this.xvelrand = random(-0.2, 0.2); 
+    this.yvelrand = random(-0.2, 0.2);
   }
 
-  //TODO: have the dots grow in size
-  grow() {
-    if (this.growth) {
-      if (this.r < round(random(15, 20))) {
-        this.r += this.growthRate;
-      } else {
-        this.growth = false;
-      }
+  //TODO: move around the screen
+  move() {
+    this.x += this.xVel;
+    this.xVel += this.xvelrand
+
+    if (this.x > width - this.r || this.x < 0) {
+      this.xVel = -this.xVel;
+    }
+
+    this.y += this.yVel;
+    this.yVel += this.yvelrand
+
+    if (this.y > height - this.r || this.y < 0) {
+      this.yVel = -this.yVel;
     }
   }
 
-  //TODO: create more plants by population rate
-  multiply() {
+  //TODO: create more herbivores by population rate
+  birth() {
     let num = random(0, 1);
     //num = random(0, 1);
     if (num < 0.01) {
@@ -41,23 +54,41 @@ class Herbivore{
     }
   }
 
-  // TODO: after a certain time make plants shrink & disappear (or by a decay rate)
-  decay() {
-    if (!this.growth) {
-      if (this.r > 0) {
-        // decayRate = -ln(current/initial) / time
-        // decayRate/dt = - ln(current/initial)/ (time**2)
-        this.decayRate = log(grasses.length / 50) / (frameCount / 50) ** 2;
-        this.r -= this.decayRate;
-        console.log(this.r);
-      }
+  // TODO: the disappearance/death of the herbivore
+  death() {
+    this.age = frameCount / 50 - this.birthTime;
+    if (this.age >= this.finalAge) {
+      this.r = 0
+      return true;
+    } else {
+      return false;
     }
+
+    // let num = random(0, 1);
+    // //num = random(0, 1);
+    // if (num < 0.02) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+
+    // if (!this.growth) {
+    //   if (this.r > 0) {
+    //     // decayRate = -ln(current/initial) / time
+    //     // decayRate/dt = - ln(current/initial)/ (time**2)
+    //     this.decayRate = log(herbivores.length / 50) / (frameCount / 50) ** 2;
+    //     this.r -= this.decayRate;
+    //     console.log(this.r);
+    //   }
+    // }
   }
 
-  // TODO: draw the dot/plant using an ellipse
+  eating() {}
+
+  // TODO: draw the dot/herbivore using an ellipse
   draw() {
     noStroke;
-    fill(this.col, 80, this.darkness);
+    fill(this.col, 50, this.darkness);
     ellipse(this.x, this.y, this.r);
   }
 }
