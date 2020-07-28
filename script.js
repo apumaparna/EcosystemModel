@@ -11,8 +11,9 @@
 
 let grass, grasses;
 let herbivores, herb; 
-let herbDeath = []; 
 let time = 0;
+let A; 
+let B;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -32,12 +33,33 @@ function setup() {
   }
   
   herb = new Herbivore(); 
+  
+  // A = [0, 1, 2, 3, 4, 5]; 
+  // B = []; 
+  // console.log(A); 
+  // for(let i = 0; i < A.length; i++) {
+  //   if (A[i] >= 3) {
+  //     B.push(i);
+  //   }
+  // }
+  
+//   console.log(B); 
+//   for (let j = B.length -1; j >= 0; j--){
+//     A.splice(B[j], 1); 
+//   }
+  
+//   console.log(A);    
 }
 
 function draw() {
   
+  
+  // Set up 
   background(10);
   fill(100);
+  
+  // Grasses 
+  
 //   for (let i = 0; i < grasses.length; i++) {
 //     //grasses[i].draw();
 //     grasses[i].grow();
@@ -53,31 +75,38 @@ function draw() {
 //     }
 //   }
   
-  console.log(herb.death()); 
   
+  // Herbivores 
+  
+  // console.log(herb.death()); 
+  let herbDeath = new Array(); 
   
   for (let i = 0; i < herbivores.length; i++) {
     
     if (herbivores[i].death()) { 
-      // for(i = herbivores.length-1; i>0; i--){
-      //   herbivores.splice(i,1);
-      // }
-      console.log(i); 
-      herbDeath.push(i); 
+      //console.log(i); 
+      herbDeath.push(i);  
     }
-  }
-  
-  for (let i = herbDeath.length - 1; i = 0; i--) {
-    herbivores.splice(herbDeath[i],1); 
-  }
-  
-  for (let i = 0; i < herbivores.length; i++) {
+    console.log(herbDeath);
+    
       herbivores[i].draw(); 
       herbivores[i].move();
+    // if (herbivores[i].birth()) {
+    //    herbivores.push(new Herbivore());
+    // }
   }
+  
+  for (let i = herbDeath.length - 1; i >= 0; i--) {
+    herbivores.splice(herbDeath[i],1); 
+  }
+
+
+  // Display the things 
   
   fill(100);
   text(`Time: ${round(frameCount / 50)}`, 10, 20);
+  
+  //Debug Statements
   text(herbivores.length, 10, 40); 
   //text(herbivores[30].age, 10, 60);
 }
