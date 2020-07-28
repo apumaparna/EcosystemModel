@@ -19,7 +19,7 @@ class Plant {
     this.growth = true;
   }
 
-  //TODO: have the dots grow in size
+  //have the dots grow in size
   grow() {
     if (this.growth) {
       if (this.r < round(random(15, 20))) {
@@ -30,7 +30,7 @@ class Plant {
     }
   }
 
-  //TODO: create more plants by population rate
+  //Returns true or false to control plant multiplication rate
   multiply() {
     let num = random(0, 1);
     //num = random(0, 1);
@@ -41,7 +41,7 @@ class Plant {
     }
   }
 
-  // TODO: after a certain time make plants shrink & disappear (or by a decay rate)
+  // After a certain time make plants shrink & disappear (or by a decay rate)
   decay() {
     if (!this.growth) {
       if (this.r > 0) {
@@ -54,7 +54,7 @@ class Plant {
     }
   }
 
-  // TODO: draw the dot/plant using an ellipse
+  // Draws the dot/plant using an ellipse
   draw() {
     noStroke;
     fill(this.col, 80, this.darkness);
