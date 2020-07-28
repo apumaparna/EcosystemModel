@@ -17,12 +17,25 @@ class Plant {
     this.col = random(90, 120);
     this.darkness = random(50, 80);
     this.growth = true;
+
+  }
+  
+  getX(){
+    return this.x;
+  }
+  
+  getY(){
+    return this.y;
   }
 
+  getRadius(){
+    return this.r;
+  }
+  
   //have the dots grow in size
   grow() {
     if (this.growth) {
-      if (this.r < round(random(15, 20))) {
+      if (this.r <= round(random(15, 20))) {
         this.r += this.growthRate;
       } else {
         this.growth = false;
@@ -48,15 +61,16 @@ class Plant {
         // decayRate = -ln(current/initial) / time
         // decayRate/dt = - ln(current/initial)/ (time**2)
         this.decayRate = log(grasses.length / 50) / (frameCount / 50) ** 2;
-        this.r -= this.decayRate;
-        console.log(this.r);
+        this.r -= 4*this.decayRate;
+        //console.log(this.r);
       }
     }
   }
 
   // Draws the dot/plant using an ellipse
   draw() {
-    noStroke;
+    noStroke();
+    //stroke(100);
     fill(this.col, 80, this.darkness);
     ellipse(this.x, this.y, this.r);
   }
