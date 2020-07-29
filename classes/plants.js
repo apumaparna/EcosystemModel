@@ -5,6 +5,25 @@
           mouseIsPressed, windowWidth, windowHeight, noStroke, UP_ARROW, triangle 
           createVector round frameCount pow log*/
 
+function startPlants(){
+    for (let i = 0; i < grasses.length; i++) {
+      grasses[i].draw();
+      grasses[i].grow();
+      grasses[i].decay();
+
+      if (grasses[i].multiply()) {
+        grasses.push(new Plant());
+      }
+
+      if (grasses[i].r == 0) {
+        grasses.splice(i, 1);
+      }
+    }
+}
+
+
+
+
 class Plant {
   constructor() {
     this.growthRate = 0.1;
@@ -81,3 +100,6 @@ class Plant {
     ellipse(this.x, this.y, this.r);
   }
 }
+
+
+

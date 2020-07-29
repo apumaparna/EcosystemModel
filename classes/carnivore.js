@@ -8,6 +8,36 @@
 let a = -1;
 let b = -1;
 
+
+
+function startCarnivores(){
+  let carnDeath = new Array();
+  // global h is used so that it can be referenced in the carnivore.js file
+  for (c = 0; c < carnivores.length; c++) {
+    if (carnivores[c].death()) {
+      //console.log(i);
+      carnDeath.push(c);
+    }
+    // console.log(herbDeath);
+
+    carnivores[c].draw();
+    carnivores[c].move();
+    carnivores[c].birth();
+
+
+    carnivores[c].eating();
+  }
+
+  for (let i = carnDeath.length - 1; i >= 0; i--) {
+    carnivores.splice(carnDeath[i], 1);
+  }
+
+  
+}
+
+
+
+
 class Carnivore {
   constructor() {
     this.popRate;
@@ -129,3 +159,5 @@ class Carnivore {
     ellipse(this.x + xNoiseVal, this.y + yNoiseVal * 30, this.r);
   }
 }
+
+
