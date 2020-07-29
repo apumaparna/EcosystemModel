@@ -46,7 +46,7 @@ class Plant {
   multiply() {
     let num = random(0, 1);
     //num = random(0, 1);
-    if (grasses.length < 13000) {
+    if (grasses.length < 10000) {
       if (num < 0.009) {
         return true;
       } else {
