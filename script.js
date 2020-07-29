@@ -30,7 +30,7 @@ function setup() {
     grasses[i] = new Plant();
   }
 
-  herbivores = new Array(15);
+  herbivores = new Array(7);
   for (let i = 0; i < herbivores.length; i++) {
     herbivores[i] = new Herbivore();
   }
@@ -127,9 +127,11 @@ function draw() {
   // Display the things
 
   fill(100);
-  text(`Time: ${round(frameCount / 50)}`, 10, 20);
+  text(`Time: ${round(frameCount / 40)}`, 10, 20);
 
   //Debug Statements
-  text(carnivores.length, 10, 40);
+  text(`Grass: ${grasses.length}`, 10, 40);
+  text(`Herbivores: ${herbivores.length}`, 10, 60);
+  text(`Carnivores: ${carnivores.length}`, 10, 80);
   //text(herbivores[30].age, 10, 60);
 }

@@ -46,12 +46,14 @@ class Plant {
   multiply() {
     let num = random(0, 1);
     //num = random(0, 1);
-    if (grasses.length < 10000) {
+    if (grasses.length < 15000) {
       if (num < 0.009) {
         return true;
       } else {
         return false;
       }
+    } else {
+      this.growth = false; 
     }
   }
 
@@ -63,6 +65,9 @@ class Plant {
         // decayRate/dt = - ln(current/initial)/ (time**2)
         this.decayRate = log(grasses.length / 50) / (frameCount / 50) ** 2;
         this.r -= 4 * this.decayRate;
+        if (this.r < 0.001){
+          this.r = 0;
+        }
         //console.log(this.r);
       }
     }

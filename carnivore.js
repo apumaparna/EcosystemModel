@@ -11,11 +11,11 @@ let b = -1;
 class Carnivore {
   constructor() {
     this.popRate;
-    this.x = random(width);
-    this.y = random(height);
+    this.r = 30;
+    this.x = random(width - this.r);
+    this.y = random(height - this.r);
     this.xVel = random(-0.01, 0.01);
     this.yVel = random(-0.01, 0.01);
-    this.r = 30;
     this.col = 0;
     this.darkness = 80;
     //this.growth = true;
@@ -25,6 +25,7 @@ class Carnivore {
     this.xvelrand = random(-0.02, 0.02);
     this.yvelrand = random(-0.02, 0.02);
     this.noiseScale = 0.02;
+    this.lastEatingTime = frameCount / 50;
   }
 
   getX() {
@@ -58,7 +59,6 @@ class Carnivore {
 
   //TODO: create more herbivores by population rate
   birth() {
-    
     if (carnivores.length < 10) {
       for (let j = 0; j < carnivores.length; j++) {
         if (j != c) {
@@ -88,6 +88,8 @@ class Carnivore {
     if (this.age >= this.finalAge) {
       //this.r = 0
       return true;
+    } else if (frameCount / 50 - this.lastEatingTime > random(8,18)) {
+      return true;
     } else {
       return false;
     }
@@ -113,6 +115,7 @@ class Carnivore {
           this.r = sqrt(sum / PI);
         }
         herbivores.splice(i, 1);
+        this.lastEatingTime = frameCount / 50;
       }
     }
   }
