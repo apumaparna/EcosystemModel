@@ -10,11 +10,11 @@ let f = -1;
 class Herbivore {
   constructor() {
     this.popRate;
-    this.x = random(width);
-    this.y = random(height);
+    this.r = 20;
+    this.x = random(width- this.r) ;
+    this.y = random(height- this.r) ;
     this.xVel = random(-0.01, 0.01);
     this.yVel = random(-0.01, 0.01);
-    this.r = 30;
     this.col = 270;
     this.darkness = 80;
     //this.growth = true;
@@ -86,7 +86,7 @@ class Herbivore {
   // Returns true or false for the disappearance/death of the herbivore
   death() {
     this.age = frameCount / 50 - this.birthTime;
-    if (this.age >= this.finalAge) {
+    if (this.age >= this.finalAge || grasses.length == 0) {
       //this.r = 0
       return true;
     } else {
