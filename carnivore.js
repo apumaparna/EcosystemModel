@@ -58,29 +58,23 @@ class Carnivore {
 
   //TODO: create more herbivores by population rate
   birth() {
-    // let num = random(0, 1);
-    // //num = random(0, 1);
-    // if (num < 0.002) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
+    
     if (carnivores.length < 10) {
       for (let j = 0; j < carnivores.length; j++) {
-        if (j != h) {
+        if (j != c) {
           if (
             collideCircleCircle(
               carnivores[j].getX(),
               carnivores[j].getY(),
               carnivores[j].getRadius(),
-              carnivores[h].getX(),
-              carnivores[h].getY(),
-              carnivores[h].getRadius()
+              carnivores[c].getX(),
+              carnivores[c].getY(),
+              carnivores[c].getRadius()
             ) &&
-            (a != j && a != h && (b != h && b != j))
+            (a != j && a != c && (b != c && b != j))
           ) {
             carnivores.push(new Carnivore());
-            a = h;
+            a = c;
             b = j;
           }
         }
