@@ -52,15 +52,15 @@ function setup() {
   for (let i = 0; i < grassCount; i++) {
     grasses.push(new Plant());
   }
-  
-  herbivores = []; 
+
+  herbivores = [];
   for (let i = 0; i < herbivoreCount; i++) {
-    herbivores.push(new Herbivore()); 
+    herbivores.push(new Herbivore());
   }
-  
-  carnivores = []; 
-  for(let i = 0; i < carnivoreCount; i++) {
-    carnivores.push(new Carnivore()); 
+
+  carnivores = [];
+  for (let i = 0; i < carnivoreCount; i++) {
+    carnivores.push(new Carnivore());
   }
 
   gui = createGui("slider-range-1");
@@ -73,79 +73,69 @@ function setup() {
 function draw() {
   // Set up
   background(10);
-  // Grasses
-  startPlants();
-
+  
+  //Grass
+  if (lastGrass != grassCount) {
+    let grassDiff = abs(grasses.length - grassCount);
+    if (grassCount > grasses.length) {
+      for (let i = 0; i < grassDiff; i++) {
+        grasses.push(new Plant());
+      }
+    } else if (grassCount < grasses.length) {
+      console.log("lesser");
+      for (let i = 0; i < grassDiff; i++) {
+        grasses.splice(grasses.length - 1, 1);
+      }
+    }
+    lastGrass = grassCount;
+  } else {
+    startPlants();
+  }
+  
   // Herbivores
-  // startHerbivores();
-
-  //Carnivores
-  startCarnivores();
-
+  if (lastHerb != herbivoreCount) {
+    let herbDiff = abs(herbivores.length - herbivoreCount);
+    if (herbivoreCount > herbivores.length) {
+      for (let i = 0; i < herbDiff; i++) {
+        herbivores.push(new Herbivore());
+      }
+    } else if (herbivoreCount < herbivores.length) {
+      for (let i = 0; i < herbDiff; i++) {
+        herbivores.splice(herbivores.length - 1, 1);
+      }
+    }
+    lastHerb = herbivoreCount;
+  } else {
+    startHerbivores();
+  }
+  
+  // Carnivores
+  if (lastCarn != carnivoreCount) {
+    let carnDiff = abs(carnivores.length - carnivoreCount);
+    if (carnivoreCount > carnivores.length) {
+      for (let i = 0; i < carnDiff; i++) {
+        carnivores.push(new Carnivore());
+      }
+    } else if (carnivoreCount < carnivores.length) {
+      for (let i = 0; i < carnDiff; i++) {
+        carnivores.splice(carnivores.length - 1, 1);
+      }
+    }
+    lastCarn = carnivoreCount;
+  } else {
+    startCarnivores();
+  }
+  
   // Display the things
 
   fill(100);
   text(`Time: ${round(frameCount / 40)}`, 10, 20);
-
   //Debug Statements
   text(`Grass: ${grasses.length}`, 10, 40);
   text(`Herbivores: ${herbivores.length}`, 10, 60);
   text(`Carnivores: ${carnivores.length}`, 10, 80);
-  //text(herbivores[30].age, 10, 60);
   
-  // console.log("new")
-  // console.log(herbivoreCount); 
-  // console.log(lastHerb); 
-  // console.log(herbivores.length); 
-  // if (lastHerb != herbivoreCount) {
-  //   if (herbivoreCount > herbivores.length) {
-  //     console.log("greater"); 
-  //     //TODO: add that many herbivores
-  //     let herbDiff = herbivores.length - herbivoreCount;
-  //     for (let i = 0; i < herbDiff; i++) {
-  //       herbivores.push(new Herbivore());
-  //     }
-  //     console.log(herbivores.length)
-  //   } else if (herbivoreCount < herbivores.length) {
-  //     console.log("lesser"); 
-  //     let herbDiff = herbivoreCount - herbivores.length;
-  //     for (let i = 0; i < herbDiff; i++) {
-  //       herbivores.splice(herbivores.length - 1, 1);
-  //     } 
-  //   } 
-  //   // lastHerb = herbivoreCount;
-  // } else {
-  //   startHerbivores(); 
-  // }
-
-
-// console.log("new")
-// console.log(carnivoreCount); 
-// console.log(lastCarn); 
-// console.log(carnivores.length);
-if (lastCarn != carnivoreCount) {
-  let carnDiff = abs(carnivores.length - carnivoreCount);
-    if (carnivoreCount > carnivores.length) {
-      console.log("greater"); 
-      //TODO: add that many herbivores
-      console.log(carnDiff); 
-      for (let i = 0; i < carnDiff; i++) {
-        carnivores.push(new Carnivore());
-      }
-      console.log(carnivores.length)
-    } else if (carnivoreCount < carnivores.length) {
-      console.log("lesser"); 
-      for (let i = 0; i < carnDiff; i++) {
-        carnivores.splice(carnivores.length - 1, 1);
-      } 
-    } 
-    lastCarn = carnivoreCount;
-  } else {
-    startHerbivores(); 
-  }
 }
-
-
 
 // function mousePressed() {
 //   //check if herbivore slider and array count are same
