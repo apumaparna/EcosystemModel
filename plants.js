@@ -17,21 +17,20 @@ class Plant {
     this.col = random(90, 120);
     this.darkness = random(50, 80);
     this.growth = true;
-
   }
-  
-  getX(){
+
+  getX() {
     return this.x;
   }
-  
-  getY(){
+
+  getY() {
     return this.y;
   }
 
-  getRadius(){
+  getRadius() {
     return this.r;
   }
-  
+
   //have the dots grow in size
   grow() {
     if (this.growth) {
@@ -47,10 +46,12 @@ class Plant {
   multiply() {
     let num = random(0, 1);
     //num = random(0, 1);
-    if (num < 0.01) {
-      return true;
-    } else {
-      return false;
+    if (grasses.length < 13000) {
+      if (num < 0.009) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
@@ -61,7 +62,7 @@ class Plant {
         // decayRate = -ln(current/initial) / time
         // decayRate/dt = - ln(current/initial)/ (time**2)
         this.decayRate = log(grasses.length / 50) / (frameCount / 50) ** 2;
-        this.r -= 4*this.decayRate;
+        this.r -= 4 * this.decayRate;
         //console.log(this.r);
       }
     }
