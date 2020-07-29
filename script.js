@@ -15,7 +15,8 @@ let grass, grasses;
 let herbivores, herb;
 let carnivores;
 let time = 0;
-let h = 0;
+let c = 0;
+let h = 0; 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -29,7 +30,7 @@ function setup() {
     grasses[i] = new Plant();
   }
 
-  herbivores = new Array(5);
+  herbivores = new Array(15);
   for (let i = 0; i < herbivores.length; i++) {
     herbivores[i] = new Herbivore();
   }
@@ -77,27 +78,24 @@ function draw() {
       }
     }
 
-  // console.log(grasses[20].growth);
-  // console.log(grasses[20].r);
+  console.log(grasses[20].growth);
+  console.log(grasses[20].r);
 
   // Herbivores
     let herbDeath = new Array();
 
-    for (let i = 0; i < herbivores.length; i++) {
-      if (herbivores[i].death()) {
+    for ( h = 0; h < herbivores.length; h++) {
+      if (herbivores[h].death()) {
         //console.log(i);
-        herbDeath.push(i);
+        herbDeath.push(h);
       }
       // console.log(herbDeath);
 
-      herbivores[i].draw();
-      herbivores[i].move();
+      herbivores[h].draw();
+      herbivores[h].move();
+      herbivores[h].birth();
 
-      if (herbivores[i].birth()) {
-        herbivores.push(new Herbivore());
-      }
-
-      herbivores[i].eating();
+      herbivores[h].eating();
     }
 
     for (let i = herbDeath.length - 1; i >= 0; i--) {
@@ -107,19 +105,19 @@ function draw() {
   //Carnivores
   let carnDeath = new Array();
   // global h is used so that it can be referenced in the carnivore.js file
-  for (h = 0; h < carnivores.length; h++) {
-    if (carnivores[h].death()) {
+  for (c = 0; c < carnivores.length; c++) {
+    if (carnivores[c].death()) {
       //console.log(i);
-      carnDeath.push(h);
+      carnDeath.push(c);
     }
     // console.log(herbDeath);
 
-    carnivores[h].draw();
-    carnivores[h].move();
-    carnivores[h].birth();
+    carnivores[c].draw();
+    carnivores[c].move();
+    carnivores[c].birth();
 
 
-    carnivores[h].eating();
+    carnivores[c].eating();
   }
 
   for (let i = carnDeath.length - 1; i >= 0; i--) {

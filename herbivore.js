@@ -2,8 +2,10 @@
 /* global createCanvas, colorMode, HSB, width, height, random, background, fill, 
           color, random, rect, ellipse, stroke, image, loadImage, keyCode,
           collideCircleCircle, text, textSize, mouseX, mouseY, strokeWeight, line, 
-          mouseIsPressed, windowWidth, windowHeight, noStroke, UP_ARROW, triangle 
-          createVector round frameCount pow log noise PI sqrt */
+          mouseIsPressed, windowWidth, windowHeight, noStroke, UP_ARROW, triangle */
+
+let e = -1;
+let f = -1;
 
 class Herbivore {
   constructor() {
@@ -17,7 +19,7 @@ class Herbivore {
     this.darkness = 80;
     //this.growth = true;
     this.age = 0;
-    this.finalAge = random(5, 15);
+    this.finalAge = random(15, 30);
     this.birthTime = frameCount / 50;
     this.xvelrand = random(-0.02, 0.02);
     this.yvelrand = random(-0.02, 0.02);
@@ -55,12 +57,29 @@ class Herbivore {
 
   //TODO: create more herbivores by population rate
   birth() {
-    let num = random(0, 1);
-    //num = random(0, 1);
-    if (num < 0.002) {
-      return true;
-    } else {
-      return false;
+    
+      if (herbivores.length < 30) {
+        console.log("gap")
+      for (let j = 0; j < herbivores.length; j++) {
+        if (j != h) {
+          if (
+            collideCircleCircle(
+              herbivores[j].getX(),
+              herbivores[j].getY(),
+              herbivores[j].getRadius(),
+              herbivores[h].getX(),
+              herbivores[h].getY(),
+              herbivores[h].getRadius()
+            ) &&
+            (e != j && e != h && (f != h && f != j))
+          ) {
+            herbivores.push(new Herbivore());
+            console.log(true)
+            e = h;
+            f = j;
+          }
+        }
+      }
     }
   }
 
