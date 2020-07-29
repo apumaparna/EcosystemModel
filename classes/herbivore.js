@@ -7,6 +7,30 @@
 let e = -1;
 let f = -1;
 
+function startHerbivores(){
+   let herbDeath = new Array();
+
+    for ( h = 0; h < herbivores.length; h++) {
+      if (herbivores[h].death()) {
+        //console.log(i);
+        herbDeath.push(h);
+      }
+      // console.log(herbDeath);
+
+      herbivores[h].draw();
+      herbivores[h].move();
+      herbivores[h].birth();
+
+      herbivores[h].eating();
+    }
+
+    for (let i = herbDeath.length - 1; i >= 0; i--) {
+      herbivores.splice(herbDeath[i], 1);
+    }
+
+}
+
+
 class Herbivore {
   constructor() {
     this.popRate;
