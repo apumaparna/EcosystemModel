@@ -107,6 +107,6 @@ function draw() {
   text(`Time: ${round(frameCount / 50)}`, 10, 20);
 
   //Debug Statements
-  text(herbivores.length, 10, 40);
+  text(grasses.length, 10, 40);
   //text(herbivores[30].age, 10, 60);
 }

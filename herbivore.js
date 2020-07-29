@@ -23,6 +23,18 @@ class Herbivore {
     this.yvelrand = random(-0.02, 0.02);
     this.noiseScale = 0.02;
   }
+  
+  getX(){
+    return this.x;
+  }
+  
+  getY(){
+    return this.y;
+  }
+
+  getRadius(){
+    return this.r;
+  }
 
   //Move the herbivores around the screen
   move() {
