@@ -6,37 +6,36 @@
 
 let e = -1;
 let f = -1;
+let past = [];
 
-function startHerbivores(){
-   let herbDeath = new Array();
+function startHerbivores() {
+  let herbDeath = new Array();
 
-    for ( h = 0; h < herbivores.length; h++) {
-      if (herbivores[h].death()) {
-        //console.log(i);
-        herbDeath.push(h);
-      }
-      // console.log(herbDeath);
-
-      herbivores[h].draw();
-      herbivores[h].move();
-      herbivores[h].birth();
-
-      herbivores[h].eating();
+  for (h = 0; h < herbivores.length; h++) {
+    if (herbivores[h].death()) {
+      //console.log(i);
+      herbDeath.push(h);
     }
+    // console.log(herbDeath);
 
-    for (let i = herbDeath.length - 1; i >= 0; i--) {
-      herbivores.splice(herbDeath[i], 1);
-    }
+    herbivores[h].draw();
+    herbivores[h].move();
+    herbivores[h].birth();
 
+    herbivores[h].eating();
+  }
+
+  for (let i = herbDeath.length - 1; i >= 0; i--) {
+    herbivores.splice(herbDeath[i], 1);
+  }
 }
-
 
 class Herbivore {
   constructor() {
     this.popRate;
     this.r = 20;
-    this.x = random(width- this.r) ;
-    this.y = random(height- this.r) ;
+    this.x = random(width - this.r);
+    this.y = random(height - this.r);
     this.xVel = random(-0.01, 0.01);
     this.yVel = random(-0.01, 0.01);
     this.col = 270;
@@ -44,21 +43,22 @@ class Herbivore {
     //this.growth = true;
     this.age = 0;
     this.finalAge = random(15, 30);
-    this.birthTime = frameCount / 50;
+    this.birthTime = frameCount / timeMultiplier;
     this.xvelrand = random(-0.02, 0.02);
     this.yvelrand = random(-0.02, 0.02);
     this.noiseScale = 0.02;
+    this.lastEatingTime = frameCount / timeMultiplier;
   }
-  
-  getX(){
+
+  getX() {
     return this.x;
   }
-  
-  getY(){
+
+  getY() {
     return this.y;
   }
 
-  getRadius(){
+  getRadius() {
     return this.r;
   }
 
@@ -80,27 +80,41 @@ class Herbivore {
   }
 
   //TODO: create more herbivores by population rate
+
   birth() {
-    
-      if (herbivores.length < 30) {
-        console.log("gap")
-      for (let j = 0; j < herbivores.length; j++) {
-        if (j != h) {
+    if (herbivores.length < 40) {
+      console.log("gap");
+      console.log(herbivores.length);
+      for (let k = 0; k < herbivores.length; k++) {
+        if (k != h && (!past.includes(k) && !past.includes(h))) {
           if (
             collideCircleCircle(
-              herbivores[j].getX(),
-              herbivores[j].getY(),
-              herbivores[j].getRadius(),
+              herbivores[k].getX(),
+              herbivores[k].getY(),
+              herbivores[k].getRadius(),
               herbivores[h].getX(),
               herbivores[h].getY(),
               herbivores[h].getRadius()
-            ) &&
-            (e != j && e != h && (f != h && f != j))
+            ) 
+           
           ) {
+            // console.log("conditions met")
+            // console.log(past); 
+            // console.log(k); 
+            // console.log(h); 
+            // console.log(past.includes(k))
+            // console.log(past.includes(h))
             herbivores.push(new Herbivore());
-            console.log(true)
+            past.push(k);
+            past.push(h);
+            if (past.length > round(herbivores.length/5)) {
+              past.splice(1, 1); 
+              past.splice(0, 1)
+            }
+            // console.log(past); 
+            // console.log(herbivores.length);
             e = h;
-            f = j;
+            f = k;
           }
         }
       }
@@ -109,9 +123,14 @@ class Herbivore {
 
   // Returns true or false for the disappearance/death of the herbivore
   death() {
-    this.age = frameCount / 50 - this.birthTime;
-    if (this.age >= this.finalAge || grasses.length == 0) {
+    this.age = frameCount / timeMultiplier - this.birthTime;
+    if (this.age >= this.finalAge) {
       //this.r = 0
+      return true;
+    } else if (
+      frameCount / timeMultiplier - this.lastEatingTime >
+      random(8, 18)
+    ) {
       return true;
     } else {
       return false;
@@ -121,12 +140,24 @@ class Herbivore {
   //TODO: use collide to simulate herbivores eating the plants/grass
   eating() {
     for (let i = 0; i < grasses.length; i++) {
-      if (collideCircleCircle(this.x,this.y, this.r, grasses[i].getX(), grasses[i].getY(),grasses[i].getRadius())) {
+      if (
+        collideCircleCircle(
+          this.x,
+          this.y,
+          this.r,
+          grasses[i].getX(),
+          grasses[i].getY(),
+          grasses[i].getRadius()
+        )
+      ) {
         if (this.r < 50) {
-        let sum = (PI * this.r * this.r) + (PI * grasses[i].getRadius() * grasses[i].getRadius());
-        this.r = sqrt(sum/PI);
+          let sum =
+            PI * this.r * this.r +
+            PI * grasses[i].getRadius() * grasses[i].getRadius();
+          this.r = sqrt(sum / PI);
         }
-        grasses.splice(i,1);
+        grasses.splice(i, 1);
+        this.lastEatingTime = frameCount / timeMultiplier;
       }
     }
   }

@@ -51,11 +51,11 @@ class Carnivore {
     //this.growth = true;
     this.age = 0;
     this.finalAge = random(15, 30);
-    this.birthTime = frameCount / 50;
+    this.birthTime = frameCount / timeMultiplier;
     this.xvelrand = random(-0.02, 0.02);
     this.yvelrand = random(-0.02, 0.02);
     this.noiseScale = 0.02;
-    this.lastEatingTime = frameCount / 50;
+    this.lastEatingTime = frameCount / timeMultiplier;
   }
 
   getX() {
@@ -114,13 +114,14 @@ class Carnivore {
 
   // Returns true or false for the disappearance/death of the herbivore
   death() {
-    this.age = frameCount / 50 - this.birthTime;
+    this.age = frameCount / timeMultiplier - this.birthTime;
     if (this.age >= this.finalAge) {
       //this.r = 0
       return true;
-    } else if (frameCount / 50 - this.lastEatingTime > random(8,18)) {
+    } else if (frameCount / timeMultiplier - this.lastEatingTime > random(8,18)) {
       return true;
-    } else {
+    } 
+    else {
       return false;
     }
   }
@@ -145,7 +146,7 @@ class Carnivore {
           this.r = sqrt(sum / PI);
         }
         herbivores.splice(i, 1);
-        this.lastEatingTime = frameCount / 50;
+        this.lastEatingTime = frameCount / timeMultiplier;
       }
     }
   }
