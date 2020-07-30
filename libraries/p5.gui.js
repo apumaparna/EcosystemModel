@@ -104,7 +104,7 @@
   function QSGui(label, parent, sketch) {
 
     // hard code the position, it can be changed later
-    let x = 20;
+    let x = windowWidth-210;
     let y = 20;
 
     var qs = QuickSettings.create(x, y, label, parent);

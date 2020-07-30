@@ -79,7 +79,7 @@ class Herbivore {
     }
   }
 
-  //TODO: create more herbivores by population rate
+  //Create more herbivores by population rate
 
   birth() {
     if (herbivores.length < 40) {
@@ -113,8 +113,6 @@ class Herbivore {
             }
             // console.log(past); 
             // console.log(herbivores.length);
-            e = h;
-            f = k;
           }
         }
       }
