@@ -22,31 +22,34 @@ let h = 0;
 //GUI Variables
 //herbivore starting value
 var herbivoreCount = 7;
-var herbMin = 1;
-var herbMax = 20;
-
 // carnivore starting value
 var carnivoreCount = 6;
-var carnMin = 1;
-var carnMax = 20;
-
 //plant starting value
 var grassCount = 50;
-var grassMin = 20;
-var grassMax = 4000;
+var timeMultiplier = 50;
+
+var herbivoreCountMin = 0;
+var herbivoreCountMax = 20;
+var carnivoreCountMin = 0;
+var carnivoreCountMax = 20;
+var grassCountMin = 20;
+var grassCountMax = 4000;
+var timeMultiplierMin = 10;
+var timeMultiplierMax = 120;
+
+var gui;
 
 let lastHerb = herbivoreCount;
 let lastCarn = carnivoreCount;
 let lastGrass = grassCount;
-
-var gui;
+let lastTimeM = timeMultiplier;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(90);
   noStroke();
   colorMode(HSB, 360, 100, 100);
-  frameRate(60);
+  frameRate(timeMultiplier);
 
   grasses = [];
   for (let i = 0; i < grassCount; i++) {
@@ -63,8 +66,13 @@ function setup() {
     carnivores.push(new Carnivore());
   }
 
-  gui = createGui("slider-range-1");
-  gui.addGlobals("herbivoreCount", "carnivoreCount", "grassCount");
+  gui = createGui("Change Number of Species");
+  gui.addGlobals(
+    "herbivoreCount",
+    "carnivoreCount",
+    "grassCount",
+    "timeMultiplier"
+  );
 
   // only call draw when then gui is changed
   //noLoop();
@@ -73,7 +81,12 @@ function setup() {
 function draw() {
   // Set up
   background(10);
-  
+  //frameRate(timeMultiplier);
+  if (lastTimeM != timeMultiplier) {
+    frameRate(timeMultiplier);
+    lastTimeM = timeMultiplier;
+  }
+
   //Grass
   if (lastGrass != grassCount) {
     let grassDiff = abs(grasses.length - grassCount);
@@ -82,7 +95,6 @@ function draw() {
         grasses.push(new Plant());
       }
     } else if (grassCount < grasses.length) {
-      console.log("lesser");
       for (let i = 0; i < grassDiff; i++) {
         grasses.splice(grasses.length - 1, 1);
       }
@@ -91,7 +103,7 @@ function draw() {
   } else {
     startPlants();
   }
-  
+
   // Herbivores
   if (lastHerb != herbivoreCount) {
     let herbDiff = abs(herbivores.length - herbivoreCount);
@@ -108,7 +120,7 @@ function draw() {
   } else {
     startHerbivores();
   }
-  
+
   // Carnivores
   if (lastCarn != carnivoreCount) {
     let carnDiff = abs(carnivores.length - carnivoreCount);
@@ -125,7 +137,7 @@ function draw() {
   } else {
     startCarnivores();
   }
-  
+
   // Display the things
 
   fill(100);
@@ -134,7 +146,7 @@ function draw() {
   text(`Grass: ${grasses.length}`, 10, 40);
   text(`Herbivores: ${herbivores.length}`, 10, 60);
   text(`Carnivores: ${carnivores.length}`, 10, 80);
-  
+  text(`FrameRate: ${timeMultiplier}`, 10, 100);
 }
 
 // function mousePressed() {

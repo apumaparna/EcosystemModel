@@ -82,7 +82,7 @@ class Plant {
       if (this.r > 0) {
         // decayRate = -ln(current/initial) / time
         // decayRate/dt = - ln(current/initial)/ (time**2)
-        this.decayRate = log(grasses.length / 50) / (frameCount / 50) ** 2;
+        this.decayRate = log(grasses.length / grassCount) / (frameCount / timeMultiplier) ** 2;
         this.r -= 4 * this.decayRate;
         if (this.r < 0.001){
           this.r = 0;
